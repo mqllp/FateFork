@@ -124,8 +124,8 @@
                 <i class="fas fa-trophy"></i> 游戏结束
             </h1>
 
-            <!-- 关键改动：从 th:utext 改为 th:text，防止 XSS 攻击 -->
-            <div class="ending-content" th:text="${endingNode.content}">
+            <!-- 改用 th:utext 来显示 HTML <br/> 标签 -->
+            <div class="ending-content" th:utext="${endingNode.content}">
                 结局内容将在这里显示...
             </div>
 

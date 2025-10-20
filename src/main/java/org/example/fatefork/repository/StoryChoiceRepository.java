@@ -22,3 +22,4 @@ public interface StoryChoiceRepository extends JpaRepository<StoryChoice, Long> 
      */
     List<StoryChoice> findByIsRandomEventTrue();
 }
+

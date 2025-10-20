@@ -31,3 +31,4 @@ public interface StoryNodeRepository extends JpaRepository<StoryNode, Long> {
      */
     java.util.List<StoryNode> findByEndingType(String endingType);
 }
+

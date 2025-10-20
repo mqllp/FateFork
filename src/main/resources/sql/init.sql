@@ -82,3 +82,4 @@ INSERT INTO story_choices (from_node_id, to_node_id, choice_text, choice_descrip
 (5, 6, '参与课程讨论', '认真学习，为未来做准备', 8),
 (5, 8, '一起玩游戏', '娱乐过度，影响学习', -10),
 (5, 6, '一起出去逛逛', '放松心情，但也要注意学习', 3);
+

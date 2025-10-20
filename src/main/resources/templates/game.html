@@ -106,10 +106,8 @@
 
         <div class="story-content">
             <h3 class="story-title" th:text="${currentNode.title}">剧情标题</h3>
-            <!-- 关键改动：从 th:utext 改为 th:text，防止 XSS 攻击 -->
-            <!-- 换行符已在后端处理成 <br/> 标签，通过 th:text 会自动转义，但我们需要显示 br 标签 -->
-            <!-- 解决方案：在后端处理好内容，在这里用 th:text 确保安全，然后用 white-space: pre-wrap 保持格式 -->
-            <div th:text="${currentNode.content}">
+            <!-- 改用 th:utext 来显示 HTML <br/> 标签 -->
+            <div th:utext="${currentNode.content}">
                 剧情内容将在这里显示...
             </div>
         </div>

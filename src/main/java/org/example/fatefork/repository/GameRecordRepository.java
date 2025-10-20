@@ -41,3 +41,4 @@ public interface GameRecordRepository extends JpaRepository<GameRecord, Long> {
     @Query("SELECT MAX(gr.gameScore) FROM GameRecord gr WHERE gr.user = :user")
     Integer findMaxScoreByUser(@Param("user") User user);
 }
+

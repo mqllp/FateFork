@@ -110,3 +110,4 @@ public class StoryChoice {
         this.randomEventProbability = randomEventProbability;
     }
 }
+
