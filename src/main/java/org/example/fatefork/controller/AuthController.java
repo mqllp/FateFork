@@ -1,14 +1,12 @@
 package org.example.fatefork.controller;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
+import org.example.fatefork.dto.UserRegistrationDto;
 import org.example.fatefork.entity.User;
 import org.example.fatefork.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,26 +30,14 @@ public class AuthController {
     /**
      * 处理用户注册
      *
-     * @param username 用户名（3-20字符）
-     * @param password 密码（至少6字符）
-     * @param nickname 昵称（可选，最多20字符）
+     * @param userDto 包含用户注册信息的DTO
      * @param result 验证结果
      * @param redirectAttributes 重定向属性
      * @return 重定向到登录页或注册页
      */
     @PostMapping("/register")
     public String register(
-            @NotBlank(message = "用户名不能为空")
-            @Size(min = 3, max = 20, message = "用户名长度必须在3-20个字符之间")
-            @RequestParam String username,
-
-            @NotBlank(message = "密码不能为空")
-            @Size(min = 6, message = "密码长度至少6个字符")
-            @RequestParam String password,
-
-            @Size(max = 20, message = "昵称长度不能超过20个字符")
-            @RequestParam(required = false) String nickname,
-
+            @Valid @ModelAttribute("userDto") UserRegistrationDto userDto,
             BindingResult result,
             RedirectAttributes redirectAttributes) {
 
@@ -65,7 +51,7 @@ public class AuthController {
         }
 
         try {
-            User user = userService.registerUser(username, password, nickname);
+            userService.registerUser(userDto.getUsername(), userDto.getPassword(), userDto.getNickname());
             redirectAttributes.addFlashAttribute("success", "注册成功！请登录。");
             return "redirect:/login";
         } catch (Exception e) {
