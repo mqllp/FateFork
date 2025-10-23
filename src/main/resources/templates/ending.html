@@ -129,7 +129,8 @@
                 结局内容将在这里显示...
             </div>
 
-            <div class="score-display">
+            <div class="score-display" th:data-ending-type="${endingNode.endingType}"
+                 th:data-final-score="${finalScore}">
                 <h3><i class="fas fa-star"></i> 最终分数: <span th:text="${finalScore}">0</span></h3>
                 <p>结局类型: <span th:text="${endingNode.endingType}">未知</span></p>
             </div>
@@ -165,18 +166,41 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function copyToClipboard() {
-        const endingType = document.querySelector('.score-display span:nth-of-type(2)').textContent;
-        const finalScore = document.querySelector('.score-display span:first-of-type').textContent;
-        const text = `我在《命运分岔口》游戏中获得了"${endingType}"结局，最终分数：${finalScore}分！`;
+        try {
+            // 直接从显示的内容中提取分数和结局
+            const scoreElement = document.querySelector('.score-display h3');
+            const scoreText = scoreElement ? scoreElement.textContent : '0分';
 
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('分享文本已复制到剪贴板！');
-            }).catch(() => {
+            // 正确提取结局类型 - 从 <p> 标签中获取
+            const endingElements = document.querySelectorAll('.score-display p');
+            let endingType = '未知结局';
+
+            if (endingElements.length > 0) {
+                // 第二个 <p> 标签包含结局类型
+                const endingP = endingElements[0];
+                endingType = endingP.textContent.replace('结局类型: ', '').trim();
+            }
+
+            // 提取纯数字分数
+            const finalScore = scoreText.match(/\d+/)?.[0] || '0';
+
+            const text = `我在《命运分岔口》游戏中获得了"${endingType}"结局，最终分数：${finalScore}分！`;
+
+            console.log('复制文本:', text); // 调试输出
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ 分享文本已复制到剪贴板！');
+                }).catch((err) => {
+                    console.error('复制失败:', err);
+                    fallbackCopyTextToClipboard(text);
+                });
+            } else {
                 fallbackCopyTextToClipboard(text);
-            });
-        } else {
-            fallbackCopyTextToClipboard(text);
+            }
+        } catch (error) {
+            console.error('函数执行出错:', error);
+            alert('❌ 复制失败，请重试');
         }
     }
 
@@ -185,26 +209,50 @@
         textArea.value = text;
         textArea.style.position = 'fixed';
         textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
         document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
 
         try {
-            document.execCommand('copy');
-            alert('分享文本已复制到剪贴板！');
+            textArea.focus();
+            textArea.select();
+            const successful = document.execCommand('copy');
+            if (successful) {
+                alert('✅ 分享文本已复制到剪贴板！');
+            } else {
+                alert('❌ 复制失败，请手动复制');
+            }
         } catch (err) {
-            alert('复制失败，请手动复制');
+            console.error('备用复制失败:', err);
+            alert('❌ 复制失败，请手动复制');
+        } finally {
+            document.body.removeChild(textArea);
         }
-
-        document.body.removeChild(textArea);
     }
 
     function shareToWeibo() {
-        const endingType = document.querySelector('.score-display span:nth-of-type(2)').textContent;
-        const finalScore = document.querySelector('.score-display span:first-of-type').textContent;
-        const text = `我在《命运分岔口》游戏中获得了"${endingType}"结局，最终分数：${finalScore}分！`;
-        const url = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(window.location.origin)}&title=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
+        try {
+            // 从 data 属性安全获取数据
+            const scoreDisplay = document.querySelector('.score-display');
+            const endingType = scoreDisplay?.getAttribute('data-ending-type') || '未知结局';
+            const finalScore = scoreDisplay?.getAttribute('data-final-score') || '0';
+
+            const text = `我在《命运分岔口》游戏中获得了"${endingType}"结局，最终分数：${finalScore}分！`;
+
+            // 构建微博分享 URL
+            const weiboUrl = new URL('https://service.weibo.com/share/share.php');
+            weiboUrl.searchParams.append('url', window.location.origin);
+            weiboUrl.searchParams.append('title', text);
+
+            // 打开新窗口
+            const popup = window.open(weiboUrl.toString(), '_blank', 'width=600,height=400');
+
+            if (!popup) {
+                alert('分享失败：请检查浏览器弹窗设置');
+            }
+        } catch (error) {
+            console.error('分享到微博失败:', error);
+            alert('分享失败，请稍后重试');
+        }
     }
 </script>
 </body>
