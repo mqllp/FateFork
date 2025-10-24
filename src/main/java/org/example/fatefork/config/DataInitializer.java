@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
                             "3. 去社团招新现场\n" +
                             "4. 回宿舍休息");
             startNode.setIsStartNode(true);
-            startNode.setBackgroundImage("/images/campus-entrance.jpg");
+            startNode.setBackgroundImage("/images/campus-entrance.png");
             storyNodeRepository.save(startNode);
             logger.debug("已创建起始节点: start");
 
@@ -59,7 +59,7 @@ public class DataInitializer implements CommandLineRunner {
                             "1. 一个空座位，旁边坐着一位认真学习的同学\n" +
                             "2. 一个小组讨论区，几个同学在讨论问题\n" +
                             "3. 一个角落的座位，看起来很安静");
-            libraryNode.setBackgroundImage("/images/library.jpg");
+            libraryNode.setBackgroundImage("/images/library.png");
             storyNodeRepository.save(libraryNode);
             logger.debug("已创建节点: library");
 
@@ -69,7 +69,7 @@ public class DataInitializer implements CommandLineRunner {
                             "1. 健康餐窗口，价格便宜但选择有限\n" +
                             "2. 特色菜窗口，价格稍贵但很诱人\n" +
                             "3. 快餐窗口，速度快但可能不够健康");
-            canteenNode.setBackgroundImage("/images/canteen.jpg");
+            canteenNode.setBackgroundImage("/images/canteen.png");
             storyNodeRepository.save(canteenNode);
             logger.debug("已创建节点: canteen");
 
@@ -80,7 +80,7 @@ public class DataInitializer implements CommandLineRunner {
                             "2. 摄影社 - 培养艺术兴趣\n" +
                             "3. 编程社 - 学习技术技能\n" +
                             "4. 篮球社 - 强身健体");
-            clubNode.setBackgroundImage("/images/club-fair.jpg");
+            clubNode.setBackgroundImage("/images/club-fair.png");
             storyNodeRepository.save(clubNode);
             logger.debug("已创建节点: club");
 
@@ -90,7 +90,7 @@ public class DataInitializer implements CommandLineRunner {
                             "1. 室友们在讨论明天的课程\n" +
                             "2. 有人提议一起玩游戏\n" +
                             "3. 有人建议一起出去逛逛");
-            dormNode.setBackgroundImage("/images/dormitory.jpg");
+            dormNode.setBackgroundImage("/images/dormitory.png");
             storyNodeRepository.save(dormNode);
             logger.debug("已创建节点: dorm");
 
@@ -102,7 +102,7 @@ public class DataInitializer implements CommandLineRunner {
                             "恭喜你！这是一个完美的结局！");
             successEnding.setIsEndingNode(true);
             successEnding.setEndingType("成功毕业");
-            successEnding.setBackgroundImage("/images/graduation.jpg");
+            successEnding.setBackgroundImage("/images/graduation.png");
             storyNodeRepository.save(successEnding);
             logger.debug("已创建结局节点: success");
 
@@ -113,7 +113,7 @@ public class DataInitializer implements CommandLineRunner {
                             "恭喜你！这是一个令人羡慕的结局！");
             entrepreneurEnding.setIsEndingNode(true);
             entrepreneurEnding.setEndingType("创业成功");
-            entrepreneurEnding.setBackgroundImage("/images/entrepreneur.jpg");
+            entrepreneurEnding.setBackgroundImage("/images/entrepreneur.png");
             storyNodeRepository.save(entrepreneurEnding);
             logger.debug("已创建结局节点: entrepreneur");
 
@@ -124,7 +124,7 @@ public class DataInitializer implements CommandLineRunner {
                             "不要灰心，重新开始吧！");
             dropoutEnding.setIsEndingNode(true);
             dropoutEnding.setEndingType("被退学");
-            dropoutEnding.setBackgroundImage("/images/dropout.jpg");
+            dropoutEnding.setBackgroundImage("/images/dropout.png");
             storyNodeRepository.save(dropoutEnding);
             logger.debug("已创建结局节点: dropout");
 

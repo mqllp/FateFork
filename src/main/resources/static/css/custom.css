@@ -10,6 +10,16 @@ body {
     background-repeat: no-repeat;
 }
 
+/* 背景图片包装容器*/
+.game-background-wrapper {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+}
+
 /* 校园主题色彩 */
 :root {
     --campus-primary: #007bff;
@@ -62,7 +72,7 @@ body {
         margin: 10px;
         padding: 20px;
     }
-    
+
     .choice-btn {
         width: 100%;
         margin: 5px 0;
@@ -84,4 +94,3 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
